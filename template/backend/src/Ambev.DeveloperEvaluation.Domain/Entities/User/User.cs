@@ -61,6 +61,18 @@ public class User : BaseEntity, IUser
     public DateTime? UpdatedAt { get; set; }
 
     /// <summary>
+    /// Gets or sets the user's name.
+    /// Includes first name and last name.
+    /// </summary>
+    public Name Name { get; set; } = new Name();
+
+    /// <summary>
+    /// Gets or sets the user's address.
+    /// Includes city, street, number, zipcode, and geolocation.
+    /// </summary>
+    public Address Address { get; set; } = new Address();
+
+    /// <summary>
     /// Gets the unique identifier of the user.
     /// </summary>
     /// <returns>The user's ID as a string.</returns>

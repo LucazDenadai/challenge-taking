@@ -32,5 +32,19 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             name.Property(n => n.FirstName).IsRequired().HasMaxLength(50);
             name.Property(n => n.LastName).IsRequired().HasMaxLength(50);
         });
+
+        builder.OwnsOne(u => u.Address, address =>
+        {
+            address.Property(a => a.City).IsRequired().HasMaxLength(100);
+            address.Property(a => a.Street).IsRequired().HasMaxLength(100);
+            address.Property(a => a.Number).IsRequired();
+            address.Property(a => a.Zipcode).IsRequired().HasMaxLength(20);
+
+            address.OwnsOne(a => a.Geolocation, geo =>
+            {
+                geo.Property(g => g.Lat).IsRequired().HasMaxLength(20);
+                geo.Property(g => g.Long).IsRequired().HasMaxLength(20);
+            });
+        });
     }
 }

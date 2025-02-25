@@ -54,6 +54,18 @@ public class Program
 
             var app = builder.Build();
             app.UseMiddleware<ValidationExceptionMiddleware>();
+            try
+            {
+                using (var scope = app.Services.CreateScope())
+                {
+                    var dbContext = scope.ServiceProvider.GetRequiredService<DefaultContext>();
+                    dbContext.Database.Migrate();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error migrating database", ex);
+            }
 
             if (app.Environment.IsDevelopment())
             {
